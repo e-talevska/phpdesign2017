@@ -1,0 +1,16 @@
+<?php 
+
+$elements = [1, 6, "John", "Hello", [1,2,3]];
+echo $elements[2];
+var_dump($elements);
+
+// delete the element with index 3
+unset($elements[3]);
+var_dump($elements);
+
+// delete the whole array
+unset($elements);
+var_dump($elements);
+
+
+ ?>
