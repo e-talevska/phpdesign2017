@@ -1,6 +1,6 @@
 <?php include 'header.php'; ?>
 <div class="container">
-<?php // include 'db.php'; ?>
+<?php include 'db.php'; ?>
     <?php
         if(!isset($_GET['id']) || !isset($portfolios[$_GET['id']]) ){
             header('location: index.php');

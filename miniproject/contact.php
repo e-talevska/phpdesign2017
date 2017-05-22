@@ -2,9 +2,56 @@
     include 'header.php';
 ?>
 
+<?php
+//var_dump($_POST);
+$errorName = $errorEmail = $errorMessage = '';
+$fullName = $phone = $email = $message = '';
+if(isset($_POST['submit'])){
+    $fullName = $_POST['full-name'];
+    $phone = $_POST['phone'];
+    $email = $_POST['email'];
+    $message = $_POST['message'];
+    
+    if(strlen(trim($fullName)) == 0){
+        $errorName = 'full name is required';
+    }
+    
+    if(strlen(trim($email)) == 0){
+        $errorEmail = 'email is required';
+    } else if(filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE ){
+        $errorEmail = 'email not valid';
+    }
+    
+    if(strlen(trim($message)) == 0){
+        $errorMessage = 'message is required';
+    }
+    
+    if(empty($errorName) && empty($errorEmail) && empty($errorMessage)){
+        require 'helper.php';
+        $emailMessage = "The user $fullName with $email has sent you the following: <hr />" . $message;
+        $mailSuccess = sendMail($email, $fullName, 'Contact form webpage', $emailMessage);
+        $fullName = $phone = $email = $message = '';
+    }
+}
+
+//if($_SERVER['REQUEST_METHOD'] == 'POST'){
+//    
+//}
+
+
+
+
+?>
+
 
     <!-- Page Content -->
     <div class="container">
+        
+        <?php if(isset($mailSuccess)){
+            $class = ($mailSuccess['error'] == true) ? 'alert-danger' : 'alert-success';
+            echo "<div class='alert $class'> {$mailSuccess['message']}  </div>";
+        }
+        ?>
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -13,7 +60,7 @@
                     <small>Subheading</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
+                    <li><a href="index.php">Home</a>
                     </li>
                     <li class="active">Contact</li>
                 </ol>
@@ -64,35 +111,39 @@
         <div class="row">
             <div class="col-md-8">
                 <h3>Send us a Message</h3>
-                <form name="sentMessage" id="contactForm" novalidate>
+                <form method="POST" name="sentMessage" id="contactForm" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Full Name:</label>
-                            <input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-                            <p class="help-block"></p>
+                            <input value="<?php echo $fullName; ?>" name="full-name" type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
+                            <p class="help-block"> <?php echo $errorName; ?></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Phone Number:</label>
-                            <input type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+                            <input value="<?php echo $phone; ?>" name="phone" type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Email Address:</label>
-                            <input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                            <input value="<?php echo $email; ?>" name="email" type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                            <p class="help-block"> <?php echo $errorEmail; ?></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Message:</label>
-                            <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                            <textarea value="<?php echo $message; ?>" name="message" rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"><?php echo $message; ?></textarea>
+                            <p class="help-block"> <?php 
+                                if(isset($errorMessage)){
+                                echo $errorMessage;} ?></p>
                         </div>
                     </div>
                     <div id="success"></div>
                     <!-- For success/fail messages -->
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button name="submit" type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
 

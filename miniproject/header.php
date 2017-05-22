@@ -57,10 +57,10 @@
                         <a href="about.html">About</a>
                     </li>
                     <li <?php if($scriptName == 'services.php'){ echo 'class="active"'; } ?>>
-                        <a href="services.html">Services</a>
+                        <a href="services.php">Services</a>
                     </li>
                     <li <?php if($scriptName == 'contact.php'){ echo 'class="active"'; } ?>>
-                        <a href="contact.html">Contact</a>
+                        <a href="contact.php">Contact</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
@@ -121,4 +121,4 @@
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-    </nav>
+</nav>
