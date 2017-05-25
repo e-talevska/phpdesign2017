@@ -46,8 +46,22 @@
 
 		    ];
 		}
-			
-
 	}
+		
+	//ovaa logika treba da ja ima na sekoja strana za da moze da funkcionira cookie na sekoja strana za logiraniot user
+	function checkLoggedIn(){
+		//ovaa logika treba da ja ima na sekoja strana za da moze da funkcionira cookie na sekoja strana za logiraniot user
+	if(!isset($_SESSION['logged_in'])){
+		if(isset($_COOKIE['user'])){
+			$_SESSION['logged_in'] = $_COOKIE['user'];
+		}else{
+			header('Loaction: login.php'); exit;
+		//if the user is not logged in, redirect him to login.php
+		}		
+	}
+	
+};	
+
+	
 
  ?>

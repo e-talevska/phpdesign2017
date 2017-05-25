@@ -1,6 +1,9 @@
  <?php
 
-
+        //na sekoj session_start se dodeluva edno id, i ovde proveruvame dali sesijata e nekade startuvana, bidejki dava error ako dva pati ja startuvame
+        if(session_id() == ''){
+            session_start();
+        }
         $phpSelf = $_SERVER['PHP_SELF'];
         $phpSelfElements = explode('/', $phpSelf);
         //var_dump($phpSelfElements);
@@ -69,6 +72,11 @@
                     <li <?php if($scriptName == "contact.php"){echo "class = 'active'";} ?>>
                         <a href="contact.php">Contact</a>
                     </li>
+                    <?php if(isset($_SESSION['logged_in'])){ ?>
+                    <li>
+                        <a href="logout.php">Log out</a>
+                    </li>
+                    <?php } ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                         <ul class="dropdown-menu">
