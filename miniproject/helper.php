@@ -13,7 +13,7 @@ function sendMail($fromEmail, $fromName, $subject, $message){
     $mail->Username = 'sedc.academy@gmail.com';                 // SMTP username
     $mail->Password = 'sedc1234';                           // SMTP password
     $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
-    $mail->Port = 587;                                    // TCP port to connect to
+    $mail->Port = 587;                              // TCP port to connect to
 
     $mail->setFrom($fromEmail, $fromName);
     $mail->addAddress('sedc.academy@gmail.com', 'Martin');
@@ -34,5 +34,15 @@ function sendMail($fromEmail, $fromName, $subject, $message){
             'error' => false,
             'message' => 'Message has been sent'
         ];
+    }
+}
+
+function checkLoggin(){
+    if(!isset($_SESSION['logged'])){
+        if(isset($_COOKIE['user'])){
+            $_SESSION['logged'] = $_COOKIE['user'];
+        } else {
+             header('Location: login.php');exit;
+        }
     }
 }
