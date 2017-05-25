@@ -1,8 +1,59 @@
 <?php include 'include/header.php' ?>
 
+<?php 
+    var_dump($_POST);
+    //If the user submitted the form
+    $errorName = $errorMsg = '';
+    $errorPhone = '';
+    $errorEmail = '';
+    $fullName = $phone = $email = $message = ''; //defaulten value vo inputite, da se prazni
+    if(isset($_POST['submit'])){
+        $fullName = $_POST['full_name'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+
+        //so trim gi chistime praznite mesta
+        if(strlen(trim ($fullName) ) == 0){
+            $errorName = "Full name is required";
+            }
+        if(strlen(trim ($phone) ) == 0){
+            $errorPhone = "Phone is required";
+            }
+        if(strlen(trim ($email) ) == 0){
+            $errorEmail = "Email is required";
+            }
+            else if(filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE){
+                $errorEmail = "Email not valid!";
+            }
+        if(strlen(trim ($message) ) == 0){
+            $errorMsg = "Message is required";
+            }       
+
+        //No validation errors, send the email
+        if(empty($errorName) && empty($errorEmail) && empty($errorMsg) && empty($errorPhone)) {
+            require 'helper.php';
+            $emailMessage = "The user $fullName with $email has sent you the following: <br> <br> " . $message;
+            $mailSuccess = sendMail($email, $fullName, "Contact from webpage", $emailMessage);
+            $fullName = $phone = $email = $message = ''; //Otkoga ke se isprati uspesno, da se isprazni pak
+        }  
+        }
+
+    // if($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    // }
+?>
+
 
     <!-- Page Content -->
     <div class="container">
+        <?php 
+
+            if(isset($mailSuccess)){
+                $class = ($mailSuccess['error'] == true) ? 'alert-danger' : 'alert-success'; //Ova e if true=vrati go prvoto posle prashalnikot, else vrati posle :
+                echo "<div class='alert $class'> {$mailSuccess['message']} </div>";
+            }
+        ?>
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -62,37 +113,41 @@
         <div class="row">
             <div class="col-md-8">
                 <h3>Send us a Message</h3>
-                <form name="sentMessage" id="contactForm" novalidate>
+                <form method="POST" name="sentMessage" id="contactForm" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Full Name:</label>
-                            <input type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
-                            <p class="help-block"></p>
+                            <input name="full_name" value="<?php echo $fullName ?>" type="text" class="form-control" id="name" required data-validation-required-message="Please enter your name.">
+                            <p class="help-block"><?php echo $errorName; ?></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Phone Number:</label>
-                            <input type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+                            <input name="phone" value="<?php echo $phone ?>" type="tel" class="form-control" id="phone" required data-validation-required-message="Please enter your phone number.">
+                            <p class="help-block"><?php echo $errorPhone; ?></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Email Address:</label>
-                            <input type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                            <input name="email" value="<?php echo $email ?>" type="email" class="form-control" id="email" required data-validation-required-message="Please enter your email address.">
+                            <p class="help-block"><?php if (isset($errorEmail)) { echo $errorEmail; } ?></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Message:</label>
-                            <textarea rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"></textarea>
+                            <textarea name="message" rows="10" cols="100" class="form-control" id="message" required data-validation-required-message="Please enter your message" maxlength="999" style="resize:none"> <?php echo $message ?> </textarea>
+                            <p class="help-block"><?php echo $errorMsg; ?></p>
                         </div>
                     </div>
                     <div id="success"></div>
                     <!-- For success/fail messages -->
-                    <button type="submit" class="btn btn-primary">Send Message</button>
+                    <button name="submit" type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
+            <!-- Koga imame formi obicno stavame POST metod, osven vo search, togash stavame GET metod -->
 
         </div>
         <!-- /.row -->
