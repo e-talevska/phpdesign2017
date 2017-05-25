@@ -1,4 +1,8 @@
 <?php
+//if the session is not already started
+if(session_id() == '') {
+    session_start();
+}
 $phpSelf = $_SERVER['PHP_SELF'];
 $phpSelfElements = explode('/', $phpSelf);
                                 //last index
@@ -62,6 +66,11 @@ $scriptName = $phpSelfElements[count($phpSelfElements) - 1];
                     <li <?php if($scriptName == 'contact.php') { echo 'class="active"'; } ?>>
                         <a href="contact.php">Contact</a>
                     </li>
+                    <?php if(isset($_SESSION['logged_in'])) { ?>
+                    <li>
+                        <a href="logout.php">Log out</a>
+                    </li>
+                    <?php } ?>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

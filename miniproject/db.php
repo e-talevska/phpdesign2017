@@ -17,3 +17,18 @@ $portfolios = [
       'text' => 'Sed id eleifend orci, sit amet pulvinar mauris. Ut tempor mauris at purus finibus, ut varius massa dignissim. Quisque faucibus ultrices odio, at accumsan magna pretium non. Proin a maximus orci. Morbi egestas mauris eu leo porta, ac maximus lacus tristique. Etiam convallis ipsum eu fringilla sodales. Maecenas ut est id mi ornare convallis ut facilisis diam. Quisque tristique eu felis gravida finibus. Proin id magna tortor. Sed sollicitudin mi ut nulla iaculis, non sodales ligula malesuada. Fusce viverra massa id risus imperdiet elementum. Praesent dui ligula, finibus sed facilisis ac, euismod sit amet quam. Sed ultrices purus ut mi mattis, at pellentesque tellus lacinia. Quisque faucibus quis libero sed porttitor. Morbi lorem metus, consectetur nec mauris ut, blandit vehicula diam.'
   ]  
 ];
+
+$users = [
+  [
+      'email' => 'test@test.com',
+      'password' => 'password'
+  ],
+  [
+      'email' => 'sedc@test.com',
+      'password' => 'password'
+  ],
+  [
+      'email' => 'sedc123@test.com',
+      'password' => 'password123'
+  ],
+];
