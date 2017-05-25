@@ -1,3 +1,9 @@
+<?php 
+// If season is already started
+if(session_id()== ''){
+    sesion_start();
+}
+?>
 <html>
     <head>
         <?php

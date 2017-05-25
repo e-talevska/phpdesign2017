@@ -1,6 +1,11 @@
 <?php 
+// If season is already started
+if(session_id()== ''){
+    session_start();
+}
 $phpself = $_SERVER['PHP_SELF'];
 $phpSelfElements = explode('/', $phpself);
+    // last index
 $scriptName = $phpSelfElements[count($phpSelfElements) - 1];
 
 ?>
@@ -64,6 +69,11 @@ $scriptName = $phpSelfElements[count($phpSelfElements) - 1];
                     <li <?php if($scriptName == 'contact.php'){echo 'class="active"';} ?>>
                         <a href="contact.php">Contact</a>
                     </li>
+                    <?php if(isset($_SESSION['logged_in'])) {?>
+                    <li>
+                        <a href="logout.php">Log out</a>
+                    </li>
+                    <?php } ?>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Portfolio <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -124,5 +134,4 @@ $scriptName = $phpSelfElements[count($phpSelfElements) - 1];
         </div>
         <!-- /.container -->
     </nav>
-?>
 
