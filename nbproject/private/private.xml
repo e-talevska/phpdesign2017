@@ -4,6 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/wamp64/www/phpdesign2017/miniproject/contact.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/db.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/check_login.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/templates/header.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/templates/footer.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/admin.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/logout.php</file>
+            <file>file:/C:/wamp64/www/phpdesign2017/miniproject/login.php</file>
             <file>file:/C:/wamp64/www/phpdesign2017/miniproject/helper.php</file>
         </group>
     </open-files>
