@@ -40,3 +40,14 @@ if(!$mail->send()) {
 }
 }
 
+function checkLoggedIn(){
+    if (!isset($_SESSION['logged_in'])){
+    //if not logged in redirect to login page
+    if(isset($_COOKIE['user'])){
+        $_SESSION['logged_in'] = $_COOKIE['user'];
+    }else{
+    header('Location:login.php');exit;
+    }
+}
+}
+

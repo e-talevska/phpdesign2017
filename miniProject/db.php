@@ -23,3 +23,21 @@ $portfolios = [
     
     
 ];
+
+$users = [
+[
+    'email' => 'test@test.com',
+    'password' => 'password'
+],
+    [
+    'email' => 'sedc@test.com',
+    'password' => 'password'
+],
+    [
+    'email' => 'sedc123@test.com',
+    'password' => 'password123'
+]
+    
+    
+    
+];

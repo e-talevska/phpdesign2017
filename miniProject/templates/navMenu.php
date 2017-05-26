@@ -1,4 +1,7 @@
-
+<?php 
+if(session_id() == ''){
+session_start();}
+?>
 <?php
 $phpSelf = $_SERVER["PHP_SELF"];
 $phpSelfElements = explode("/", $phpSelf);
@@ -59,6 +62,11 @@ $scriptName = $phpSelfElements [count($phpSelfElements) - 1];
                     <li <?php if($scriptName == "contact.php"){echo 'class="active"';}?>>
                         <a href="contact.php">Contact</a>
                     </li>
+                    <li><?php if(isset($_SESSION['logged_in'])){?>
+                        <a href="log_out.php">Log out</a>
+                    </li>
+                    <?php }?>
+                      
                     
                 </ul>
             </div>
