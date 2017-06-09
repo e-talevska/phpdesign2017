@@ -1,5 +1,21 @@
 <?php
-$code = $city = $phone = $street = $number = $state = $country = $postalode = $teritorry = '';
+require '../../models/office.php';
+if(!isset($_GET['id'])){
+    header('Location: list.php');exit;
+}
+$office = new SEDC\DB\Office();
+if($office->fetchById($_GET['id']) === FALSE) {
+   header('Location: list.php');exit;
+}
+$code = $office->officeCode;
+$city = $office->city;
+$phone = $office->phone;
+$street = $office->addressLine1;
+$number = $office->addressLine2;
+$state = $office->state;
+$country = $office->country;
+$postalcode = $office->postacode;
+$territory = $office->territory;
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $code = $_POST['officeCode'];
@@ -43,7 +59,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // Check if validations is succsessfull
     if(empty($errors)) {
         //Validation ok
-        require '../../models/office.php';
+        
         $office = new SEDC\DB\Office();
         $office->setAttributes($_POST);
         $office->save();
@@ -54,10 +70,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 <html>
     <head>
-        <title>Crate Office</title>
+        <title>EDIT</title>
     </head>
     <body>
-        <h1>Create Office</h1>
+        <h1>Edit</h1>
         <form method="POST" action="">
             <div>
                 <label for="code">Code</label>
@@ -76,32 +92,32 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
             <div>
                 <label for="adressLine1">street</label>
-                <input type="text" name="addressLine1" id="adressLine1" >
+                <input value='<?=$addressLine1 ?>'type="text" name="addressLine1" id="adressLine1" >
                 <p class="error"></p>
             </div>
             <div>
                 <label for="adressLine2">Number</label>
-                <input type="number" name="addressLine2" id="adressLine2" >
+                <input value='<?=$addressLine2 ?>'type="number" name="addressLine2" id="adressLine2" >
                 <p class="error"></p>
             </div>
             <div>
                 <label for="state">State</label>
-                <input type="text" name="state" id="state" >
+                <input value='<?=$state ?>'type="text" name="state" id="state" >
                 <p class="error"></p>
             </div>
             <div>
                 <label for="country">Country</label>
-                <input type="text" name="country" id="country" >
+                <input value='<?=$country ?>'type="text" name="country" id="country" >
                 <p class="error"></p>
             </div>
             <div>
                 <label for="postalcode">Postal code</label>
-                <input type="number" name="postalCode" id="postalcode" >
+                <input value='<?=$postalcode ?>'type="number" name="postalCode" id="postalcode" >
                 <p class="error"></p>
             </div>
              <div>
-                <label for="teritorry">Teritorry</label>
-                <input type="text" name="territory" id="teritorry" >
+                <label for="territory">Territory</label>
+                <input value='<?=$territory ?>'type="text" name="territory" id="territory" >
                 <p class="error"></p>
             </div>
             <div>
@@ -110,3 +126,5 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         </form>
     </body>
 </html>
+
+
