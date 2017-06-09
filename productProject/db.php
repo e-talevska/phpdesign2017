@@ -26,12 +26,21 @@ abstract class DB {
      * @param array $columns ['id', 'name', 'lastname']
      * @param type $values
      */
-    protected function _save($columns, $values) {
+    public function save() {
+       //get all properties for object in assoc array
+        $properties = get_object_vars($this);
+        unset($properties['table']); //remove property table from array
+        unset($properties['db']);
+        
+        //extract the properies names and values in separate arrays
+        $columns = array_keys($properties);
+        $values = array_values($properties);
+
         $statement = "INSERT INTO {$this->table} "
-        . "(".implode(',', $columns).") "
-                . " VALUES ()";
-        echo $statement;
-//        return $this->db->exec($statement);
+        . "("   .implode(',', $columns).      ") "
+        . " VALUES (" . '"' . implode('","', $values) . '"' . ")";
+//        echo $statement;
+        return $this->db->exec($statement);
     }
     
     public function setAttributes($attributes) {

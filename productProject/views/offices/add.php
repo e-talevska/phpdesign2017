@@ -48,6 +48,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $office = new \SEDC\DB\Office();
         $office->setAttributes($_POST);
         $office->save();
+        header("Location: list.php");exit;
     }
 }
 ?>

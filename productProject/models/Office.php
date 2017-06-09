@@ -19,14 +19,13 @@ class Office extends DB{
         $this->table = 'offices';
     }
     
-    public function save() {
-        //get all properties for object in assoc array
-        $properties = get_object_vars($this);
-        unset($properties['table']); //remove property table from array
-        //extract the properies names and values in separate arrays
-        $columns = array_keys($properties);
-        $values = array_values($properties);
-        parent::_save($columns, $values);
-    }
+//    public function save() {
+//        
+//        $statement = "INSERT INTO offices "
+//        . "(officeCode, city,phone) "
+//        . " VALUES ('$this->officeCode', '$this->city', '$this->phone')";
+//        
+//        $this->db->exec($statement);
+//    }
 }
 
