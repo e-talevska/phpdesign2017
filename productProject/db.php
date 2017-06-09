@@ -6,7 +6,7 @@ abstract class DB {
     const DB_USERNAME = 'root';
     const DB_PASSWORD = '';
     const DB_DB = 'onlineshop';
-    private $db;
+    protected $db;
     protected $table;
 
 
@@ -14,7 +14,7 @@ abstract class DB {
         try {
             $this->db = new \PDO("mysql:host=".self::DB_HOST.";"
                     . "dbname=".self::DB_DB, self::DB_USERNAME, self::DB_PASSWORD);
-            echo "Connection successfully established<br>";
+//            echo "Connection successfully established<br>";
         } catch (\PDOException $ex) {
             echo $ex->getMessage();
         } catch (\Exception $ex) {

@@ -19,6 +19,24 @@ class Office extends DB{
         $this->table = 'offices';
     }
     
+    public function fullAddress() {
+        return "City: {$this->city}<br>"
+        . " Country: {$this->country}<br>"
+        . " Postal Code: {$this->postalCode}";
+    }
+    
+    public function readAll() {
+        $query = "SELECT * FROM offices";
+        $pdoStatementObject = $this->db->query($query, \PDO::FETCH_CLASS, __CLASS__);
+        return $pdoStatementObject->fetchAll();
+    }
+    
+    public function fetchById($id) {
+        $query = "SELECT * FROM {$this->table} WHERE officeCode = '$id'";
+        $pdoStatementObject = $this->db->query($query, \PDO::FETCH_INTO, $this);
+        return $pdoStatementObject->fetch();
+    }
+    
 //    public function save() {
 //        
 //        $statement = "INSERT INTO offices "
