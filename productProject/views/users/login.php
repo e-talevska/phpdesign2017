@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if($user->fetchByEmail($email) == FALSE) {
             $errors['password'] = 'Wrong email/password';
         } else {
-            if(password_hash($password, PASSWORD_DEFAULT) == $user->password) {
+            if(password_verify($password, $user->password)) {
                 //ok
                 $_SESSION['logged_in'] = $email;
                 header("Location: ./views/offices/list.php");exit;
