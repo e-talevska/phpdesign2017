@@ -21,7 +21,7 @@ $territory = $office->territory;
 
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $code = $_POST['officeCode'];
+//    $code = $_POST['officeCode'];
     $city = $_POST['city'];
     $phone = $_POST['phone'];
     $street = $_POST['addressLine1'];
@@ -31,9 +31,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postalCode = $_POST['postalCode'];
     $territory = $_POST['territory'];
 
-    if(trim($code) == '') {
-        $errors['code'] = 'Code is required';
-    }
+//    if(trim($code) == '') {
+//        $errors['code'] = 'Code is required';
+//    }
     
     if(trim($city) == '') {
         $errors['city'] = 'City is required';
@@ -62,10 +62,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     //check if validation is successful
     if(empty($errors)) {
         //validation ok
-        
-        $office = new \SEDC\DB\Office();
         $office->setAttributes($_POST);
-        $office->save();
+        $office->update();
         header("Location: list.php");exit;
     }
 }
@@ -77,12 +75,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <body>
         <h1>Edit Office</h1>
         <form method="POST" action="">
-            <div>
+<!--            <div>
                 <label for="code">Code</label>
                 <input value="<?=$code ?>" type="number" name="officeCode" id="code" >
                 <p class="error">
                     <?php echo isset($errors['code']) ? $errors['code'] : '' ?></p>
-            </div>
+            </div>-->
             <div>
                 <label for="city">City</label>
                 <input value="<?=$city ?>" type="text" name="city" id="city" >
@@ -124,7 +122,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p class="error"></p>
             </div>
             <div>
-                <button name="create">Create</button>
+                <button name="update">Update</button>
             </div>
         </form>
     </body>

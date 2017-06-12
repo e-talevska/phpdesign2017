@@ -37,6 +37,26 @@ class Office extends DB{
         return $pdoStatementObject->fetch();
     }
     
+    function update() {
+        $query = "UPDATE {$this->table} SET ";
+        $query.= " city = '$this->city',";
+        $query.= " phone = '$this->phone',";
+        $query.= " addressLine1 = '$this->addressLine1',";
+        $query.= " addressLine2 = '$this->addressLine2',";
+        $query.= " state = '$this->state',";
+        $query.= " country = '$this->country',";
+        $query.= " postalCode = '$this->postalCode',";
+        $query.= " territory = '$this->territory'";
+        $query.= " WHERE officeCode = '$this->officeCode'";
+        return $this->db->exec($query);
+    }
+    
+    function delete($id) {
+        $query = "DELETE FROM $this->table WHERE officeCode = '$id'";
+         $this->db->exec($query);
+//         var_dump($this->db->errorInfo());exit;
+    }
+    
 //    public function save() {
 //        
 //        $statement = "INSERT INTO offices "
