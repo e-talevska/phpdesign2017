@@ -23,6 +23,7 @@
 					<?= "<b>" . $office->fullAddress() . "</b>" ; ?>
 				</address>
 				<a href="edit.php?id=<?= $office->officeCode ?>">edit</a>
+				<a href="delete.php?id=<?= $office->officeCode ?>">delete</a>
 			</div>
 	<?php	} ?>
 

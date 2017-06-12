@@ -1,5 +1,6 @@
 <?php
 	require '../../models/office.php';
+	//[rpveruvam dali znam na koj link kliknal korisnikot]
 	if(!isset($_GET['id'])){
 		header('Location: list.php');
 	}
@@ -10,7 +11,7 @@
 		header('Location: list.php');
 	};
 
-	$code = $office->officeCode;
+	//$code = $office->officeCode; ne ni treba bidejki vo forma go nemame
 	$city = $office->city;
 	$phone = $office->phone;
 	$addressLine1 = $office->addressLine1;
@@ -23,7 +24,7 @@
 	$errors = [];
 	//citanje podatoci od forma
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		$code = $_POST['officeCode'];
+		//$code = $_POST['officeCode'];
 		$city = $_POST['city'];
 		$phone = $_POST['phone'];
 		$addressLine1 = $_POST['addressLine1'];
@@ -33,9 +34,6 @@
 		$postalCode = $_POST['postalCode'];
 		$territory = $_POST['territory'];
 
-		if(trim($code) == ''){
-			$errors['officeCode'] = "Code is required";
-		}
 		if(trim($city) == ''){
 			$errors['city'] = "City is required";
 		}
@@ -56,13 +54,13 @@
 		if(empty($errors)){
 			//validation okay
 			//avtomatski ja nasleduva funkcija setAttributes od DB
-			
+			//var_dump($office);exit;//informacii kakko so se momentalno vo baza
 			//kreiranje instanca od Office
-			$office = new \SEDC\DB\Office();
+			//$office = new \SEDC\DB\Office();
 			$office->setAttributes($_POST);
-			//zemanite property t.e. vrednosti od tabela zacuvaj gi vo baza
-			//var_dump($office);exit;
-			$office->save();
+			// gi prebrsiuame postoeckite informacii so setAttributes();
+			//var_dump($office);exit;//promeneti rezultati, momentalni
+			$office->update();
 			header('Location: list.php ');
 			exit;
 		}
@@ -78,13 +76,6 @@
 <body>
 	<h1>Edit Office</h1>
 	<form method="POST">
-		<div>
-			<label for="code">Office Code</label>
-			<input value="<?= $code; ?>" type="number" name="officeCode" id="code">
-			<p class="error">
-				<?php echo isset($errors['officeCode']) ? $errors['officeCode'] : ''; ?>
-			</p>
-		</div>
 		<div>
 			<label for="city">City</label>
 			<input value="<?= $city; ?>" type="text" name="city" id="city">
@@ -138,7 +129,7 @@
 			</p>
 		</div>
 		<div>
-			<button type="submit" name="create">Create</button>
+			<button type="submit" name="update">Update</button>
 		</div>
 	</form>
 </body>

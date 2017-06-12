@@ -36,7 +36,7 @@
 			$query = "SELECT * FROM {$this->table}";
 			//query e metod na PDO, __CLASS__ samo go pecati office oti nema parametri za da gi piseme
 			//ova e vsusnost PDO statement koj so go koristime za da citame vrednosti
-			//dobivame niza kade sekoj element e objekt so ni go ovozmozuva PDO::FETCH_CLASS
+			//dobivame niza kade sekoj element e instanca - objekt od office klasata so ni go ovozmozuva PDO::FETCH_CLASS
 			//$pdoStatementObject e vsusnost objekt na PDO, ne e samo rezultat od funkcijata query
 			$pdoStatementObject = $this->db->query($query, \PDO::FETCH_CLASS, __CLASS__);
 			return $pdoStatementObject->fetchAll();
@@ -48,7 +48,30 @@
 			//vo objektot vo koj ke ja povikuvame funkcijata go iskoristuvame kako prametar na metodot query, pravo tamu da gi zapisuva podatocite $this i zatoa posle vo edit.php ni go dava za momentalniot objekt vrednostite
 			$pdoStatementObject = $this->db->query($query, \PDO::FETCH_INTO, $this);
 			//ne stavame fetchAll() bidejki ni treba smao office Code ne se.
-			var_dump($pdoStatementObject->fetch());
+			$pdoStatementObject->fetch();
+		}
+
+		public function update(){
+			$query = "UPDATE {$this->table} SET";
+			//pravime konkatanacija na samoto query za propregledno da e
+			$query .= " city = '$this->city',";
+			$query .= " phone = '$this->phone',";
+			$query .= " addressLine1 = '$this->addressLine1',";
+			$query .= " addressLine2 = '$this->addressLine2',";
+			$query .= " state = '$this->state',";
+			$query .= " country = '$this->country',";
+			$query .= " postalCode = '$this->postalCode',";
+			$query .= " territory = '$this->territory'";
+			$query .= " WHERE officeCode = '$this->officeCode'";
+			//echo $query;exit;
+			//vraka false ako e gresno i broj na updatirani zapisi
+			return $this->db->exec($query);
+		}
+
+		public function delete($id){
+			$query = "DELETE FROM {$this->table} WHERE officeCode = '$id'";
+			$this->db->exec($query);
+			//echo $query;exit;
 		}
 
 	}
