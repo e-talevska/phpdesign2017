@@ -31,9 +31,27 @@ class Office extends DB{
     
     public function fetchById($id) {
         $query = "SELECT * FROM {$this->table} WHERE officeCode = '{$id}'";
-        $pdoStatementObject = $this->dbquery($query, \PDO::FETCH_INTO, $this);
+        $pdoStatementObject = $this->db->query($query, \PDO::FETCH_INTO, $this);
         return $pdoStatementObject->fetch();
         //var_dump($pdoStatementObject_>fetch());
+    }
+    function update(){
+        $query = "UPDATE {$this->table} SET";
+        $query.= " city = '$this->city',";
+        $query.= " phone = '$this->phone',";
+        $query.= " addressLine1 = '$this->addressLine1',";
+        $query.= " addressLine2 = '$this->addressLine2',";
+        $query.= " state = '$this->state',";
+        $query.= " country = '$this->country',";
+        $query.= " postalCode = '$this->postalCode',";
+        $query.= " territory = '$this->territory'";
+        $query.= " WHERE officeCode = '$this->officeCode'";
+        return $this->db->exec($query);
+        
+    }
+    function delete($id) {
+        $query = "DELETE FROM $this->table WHERE officeCode = '$id'";
+        return $this->db->exec($query);
     }
     /*   public function save() {
         //get all properties for object in assoc array

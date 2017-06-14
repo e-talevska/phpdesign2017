@@ -14,11 +14,11 @@ $street = $office->addressLine1;
 $number = $office->addressLine2;
 $state = $office->state;
 $country = $office->country;
-$postalcode = $office->postacode;
+$postalcode = $office->postalCode;
 $territory = $office->territory;
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $code = $_POST['officeCode'];
+   // $code = $_POST['officeCode'];
     $city = $_POST['city'];
     $phone = $_POST['phone'];
     $street = $_POST['addressLine1'];
@@ -59,10 +59,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     // Check if validations is succsessfull
     if(empty($errors)) {
         //Validation ok
-        
-        $office = new SEDC\DB\Office();
+        //$office = new SEDC\DB\Office();
         $office->setAttributes($_POST);
-        $office->save();
+        $office->update();
         header('Location: list.php');exit;
     }
 }
@@ -75,11 +74,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <body>
         <h1>Edit</h1>
         <form method="POST" action="">
-            <div>
+<!--            <div>
                 <label for="code">Code</label>
                 <input value='<?=$code ?>' type="number" name="officeCode" id="code" >
                 <p class="error"><?php echo isset($errors['code']) ? $errors['code'] : ''?></p>
-            </div>
+            </div>-->
              <div>
                 <label for="city">City</label>
                 <input value='<?=$city ?>' type="text" name="city" id="city" >
@@ -92,12 +91,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             </div>
             <div>
                 <label for="adressLine1">street</label>
-                <input value='<?=$addressLine1 ?>'type="text" name="addressLine1" id="adressLine1" >
+                <input value='<?=$street ?>'type="text" name="addressLine1" id="adressLine1" >
                 <p class="error"></p>
             </div>
             <div>
                 <label for="adressLine2">Number</label>
-                <input value='<?=$addressLine2 ?>'type="number" name="addressLine2" id="adressLine2" >
+                <input value='<?=$number ?>'type="number" name="addressLine2" id="adressLine2" >
                 <p class="error"></p>
             </div>
             <div>
