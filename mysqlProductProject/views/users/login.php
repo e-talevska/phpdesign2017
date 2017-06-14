@@ -2,6 +2,10 @@
 
 	session_start();
 
+	if(isset($_SESSION['logged_in'])){
+		header('Location: ../offices/list.php');exit;
+	}
+
 	$errors = [];
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -22,10 +26,14 @@
 			if($user->fetchByEmail($email) == false){
 				$errors['password'] = 'Wrong email or passowrd.';
 			}else{
-				if(password_hash($password, PASSWORD_DEFAULT) == $user->password){
+				//proveri dali e pass ist kako vo baza
+				if(password_verify($password, $user->password)){
 					//koristeme sesija za da zacuvame deka userot se logiral, ako ja imame vrednosta vo sesija znaci se logiral
+					//so $email znaeme koj korisnik vo daden moment se logiral
 					$_SESSION['logged_in'] = $email;
-					header('Location: ../views/offices/list.php');exit;
+					$_SESSION['fullName'] = $user->fullName;
+					//$realPath = realPath('../offices/list.php');
+					header('Location: ../offices/list.php');exit;
 				}else{
 					$errors['password'] = 'Wrong email / passowrd.';
 				}
