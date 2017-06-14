@@ -1,5 +1,8 @@
 <?php
 session_start();
+if(isset($_SESSION['logged_in'])) {
+    header("Location: ../offices/list.php");exit;
+}
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
@@ -22,7 +25,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             if(password_verify($password, $user->password)) {
                 //ok
                 $_SESSION['logged_in'] = $email;
-                header("Location: ./views/offices/list.php");exit;
+                $_SESSION['fullName'] = $user->fullName;
+//                $realPath = realpath('../offices/list.php');
+//                var_dump($realPath);exit;
+                header("Location: ../offices/list.php");exit;
             } else {
                 $errors['password'] = 'Wrong email/password';
             }
