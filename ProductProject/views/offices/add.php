@@ -3,6 +3,7 @@ $officeCode = $city = $phone = $addressLine1 = $addressLine2 = $state = $country
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $officeCode = $_POST['code'];
+    echo $officeCode;
     $city = $_POST['city'];
     $phone = $_POST['phone'];
     $addressLine1 = $_POST['addressLine1'];
@@ -69,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         <form method="POST" action="">
             <div>
                 <label for="code">Code</label>
-                <input value="<?= $officeCode ?>" type="number" name="code" id="code">
+                <input value="<?= $officeCode ?>" type="text" name="code" id="code" />
                 <p class="error"><?php echo isset($errors['code']) ? $errors['code'] : ''; ?></p>
             </div>
             <div>

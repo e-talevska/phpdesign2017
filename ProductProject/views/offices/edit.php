@@ -19,7 +19,7 @@ $territory = $office->territory;
 //$officeCode = $city = $phone = $addressLine1 = $addressLine2 = $state = $country = $postalCode = $territory = '';
 $errors = [];
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $officeCode = $_POST['code'];
+//    $officeCode = $_POST['code'];
     $city = $_POST['city'];
     $phone = $_POST['phone'];
     $addressLine1 = $_POST['addressLine1'];
@@ -29,9 +29,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $postalCode = $_POST['postalCode'];
     $territory = $_POST['territory'];
     
-    if(trim($officeCode) == ''){
-        $errors['code'] = 'Office code is required';
-    }
+//    if(trim($officeCode) == ''){
+//        $errors['code'] = 'Office code is required';
+//    }
     if(trim($city) == ''){
         $errors['city'] = 'City is required';
     }
@@ -58,9 +58,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     
     if(empty($errors)){
+//        var_dump($office);exit;
         $office = new \SEDC\DB\Office();
         $office->setAttributes($_POST);
-        $office->save();
+        $office->update();exit;
         header('location: list.php');exit;
     }
 }
@@ -83,11 +84,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <body>
         <h1>Edit Office</h1>
         <form method="POST" action="">
-            <div>
+<!--            <div>
                 <label for="code">Code</label>
                 <input value="<?= $officeCode ?>" type="number" name="code" id="code">
                 <p class="error"><?php echo isset($errors['code']) ? $errors['code'] : ''; ?></p>
-            </div>
+            </div>-->
             <div>
                 <label for="city">City</label>
                 <input value="<?= $city ?>" type="text" name="city" id="city">
@@ -129,7 +130,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
                 <p class="error"><?php echo isset($errors['territory']) ? $errors['territory'] : ''; ?></p>
             </div>
             <div>
-                <button name="create">Create</button>
+                <button name="update">Update</button>
             </div>
         </form>
     </body>

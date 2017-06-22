@@ -33,8 +33,9 @@ abstract class DB {
         $values = array_values($propeties);
 //        var_dump($propeties, $columns, $values);exit;
         
-        $statement = "INSERT INTO {$this->table}" . "(" .implode(',' , $columns) .  ") "
+        $statement = "INSERT INTO {$this->table}" . "(" .implode(',' , $columns) .  ")"
                 . " VALUES (". '"' . implode('","' , $values) . '"' . ")";
+//        var_dump($statement);exit;
         return $this->db->exec($statement);
 //        $this->db->exec($statement);
     }
