@@ -24,7 +24,7 @@
 		$pdo = connect();
 		$sql = "INSERT INTO `users` ('username', 'password', 'firstname', 'lastname', 'dob', 'phone', 'email', 'gender' )";
 		//na ista promenliva na kraj dodadi neso
-		$sql .= " VALUES ('".trim($params['username'])." ', '". password_hash($params['password'], PASS_DEFAULT) ."', " . " '{$params['firstname']}', '{$params['lastname']}', '{$params['email']}', '{$params['phone']}', '". date('Y-m-d', strtotime($params['dob'])) ."', '{$params['gender']}' )";
+		$sql .= " VALUES ('".trim($params['username'])." ', '". password_hash($params['password'], PASSWORD_DEFAULT) ."', " . " '{$params['firstname']}', '{$params['lastname']}', '{$params['email']}', '{$params['phone']}', '". date('Y-m-d', strtotime($params['dob'])) ."', '{$params['gender']}' )";
 		echo $sql;exit;
 		return $pdo ->exec($sql);
 	}
