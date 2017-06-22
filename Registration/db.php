@@ -21,3 +21,10 @@ function insertUser($param){
 	// echo $sql;exit;
 	return $pdo->exec($sql);
 }
+
+function fetchUsers(){
+	$pdo = connect();
+	$sql = "SELECT `username`, `firstName`, `lastName` FROM `users`";
+	$pst = $pdo->query($sql, PDO::FETCH_ASSOC);
+	return $pst->fetchAll();
+}
