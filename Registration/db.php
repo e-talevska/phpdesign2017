@@ -16,15 +16,15 @@ function checkIfUsernameExists($username, $column = 'username'){
 
 function insertUser($param){
 	$pdo = connect();
-	$sql = "INSERT INTO `users` (`username`, `password`, `firstName`, `lastName`, `dob`, `phone`, `email`, `gender`) ";
-	$sql .= " VALUES ('{$param['username']}', '" . password_hash($param['password'], PASSWORD_DEFAULT) . "', '{$param['firstName']}', '{$param['lastName']}', '" . date('y-m-d', strtotime($param['dob'])) . "', '{$param['phone']}', '{$param['email']}', '{$param['gender']}')";
+	$sql = "INSERT INTO `users` (`username`, `password`, `firstName`, `lastName`, `dob`, `phone`, `email`, `gender`, `profile`) ";
+	$sql .= " VALUES ('{$param['username']}', '" . password_hash($param['password'], PASSWORD_DEFAULT) . "', '{$param['firstName']}', '{$param['lastName']}', '" . date('y-m-d', strtotime($param['dob'])) . "', '{$param['phone']}', '{$param['email']}', '{$param['gender']}', '{$param['profile']}')";
 	// echo $sql;exit;
 	return $pdo->exec($sql);
 }
 
 function fetchUsers(){
 	$pdo = connect();
-	$sql = "SELECT `username`, `firstName`, `lastName` FROM `users`";
+	$sql = "SELECT `username`, `firstName`, `lastName`, `profile` FROM `users`";
 	$pst = $pdo->query($sql, PDO::FETCH_ASSOC);
 	return $pst->fetchAll();
 }

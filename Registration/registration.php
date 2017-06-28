@@ -11,6 +11,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 	$phone = trim($_POST['phone']);
 	$email = trim($_POST['email']);
 	$gender = trim($_POST['gender']);
+	$profile = $_FILES['profile'];
+	// var_dump($profile);exit;
 
 	$errors = [];
 
@@ -48,11 +50,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 		$errors['gender'] = "Gender is required";
 	}
 
+	if($profile['error'] != UPLOAD_ERR_OK){
+		$errors['profile'] = 'Upload failed';
+	}
+
 	if(!empty($errors)){
 		$_SESSION['errors'] = $errors;
 		$_SESSION['values'] = $_POST;
 	} else{
-		insertUser($_POST);
+		if(move_uploaded_file($profile['tmp_name'], 'uploads/'.$profile['name'])){
+			$insertArray = array_merge($_POST, ['profile' => $profile['name']]);
+			insertUser($insertArray);
+		}
 		header('Location: list.php');exit;
 	}
 }

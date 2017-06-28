@@ -13,7 +13,7 @@ unset($_SESSION['errors'], $_SESSION['values']);
 	</head>
 	<body>
 		<h1>Register</h1>
-		<form method="POST" action="registration.php">
+		<form method="POST" action="registration.php" enctype="multipart/form-data">
 			<div>
 				<input value="<?php echo isset($values['username']) ? $values['username'] : ''; ?>" type="text" name="username" placeholder="Username">
 				<p class="errors"><?php echo isset($errors['username']) ? $errors['username'] : ''; ?></p>
@@ -51,6 +51,10 @@ unset($_SESSION['errors'], $_SESSION['values']);
 					<option <?php if($gender == 'o'){ echo 'selected'; } ?> value="o">Other</option>
 				</select>
 				<p class="errors"><?php echo isset($errors['gender']) ? $errors['gender'] : ''; ?></p>
+			</div>
+			<div>
+				<input type="file" name="profile" accept="image/*">
+				<p class="errors"><?php echo isset($errors['profile']) ? $errors['profile'] : ''; ?></p>
 			</div>
 			<div>
 				<button type="submit" name="register">Register</button>
