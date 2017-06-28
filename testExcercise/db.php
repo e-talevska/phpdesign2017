@@ -19,14 +19,23 @@
 		return ($result  === FALSE) ? FALSE : TRUE;
 	}
 
-
-	function insertUser($params){
+	
+	function insertUser($param){
 		$pdo = connect();
-		$sql = "INSERT INTO `users` ('username', 'password', 'firstname', 'lastname', 'dob', 'phone', 'email', 'gender' )";
-		//na ista promenliva na kraj dodadi neso
-		$sql .= " VALUES ('".trim($params['username'])." ', '". password_hash($params['password'], PASSWORD_DEFAULT) ."', " . " '{$params['firstname']}', '{$params['lastname']}', '{$params['email']}', '{$params['phone']}', '". date('Y-m-d', strtotime($params['dob'])) ."', '{$params['gender']}' )";
-		echo $sql;exit;
-		return $pdo ->exec($sql);
+		$sql = "INSERT INTO `users` (`username`, `password`, `firstname`, `lastname`, `dob`, `phone`, `email`, `gender`, `profile`) ";
+		$sql .= " VALUES ('{$param['username']}', '" . password_hash($param['password'], PASSWORD_DEFAULT) . "', '{$param['firstname']}', '{$param['lastname']}', '" . date('y-m-d', strtotime($param['dob'])) . "', '{$param['phone']}', '{$param['email']}', '{$param['gender']}', '{$param['profile']}')";
+		// echo $sql;exit;
+		return $pdo->exec($sql);
+		// var_dump($pdo->errorInfo());exit;
 	}
+
+
+	function fetchUsers(){
+		$pdo = connect();
+		$sql = "SELECT `username`, `firstname`, `lastname`, `profile` FROM `users`";
+		$pst = $pdo->query($sql, PDO::FETCH_ASSOC);
+		return $pst->fetchAll();
+	}
+
 
 ?>

@@ -16,6 +16,9 @@
 		$email = trim($_POST['email']);
 		$gender = trim($_POST['gender']);
 
+		//read the file
+		$profile =  $_FILES['profile'];
+
 		//validate the values
 		$errors = [];
 
@@ -43,19 +46,27 @@
 			$errors['email'] = 'Email is required';
 		}else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 			$errors['email'] = 'Email is not valid.';
-		}else if(!checkIfUsernameExist($email, 'email')){
+		}else if(checkIfUsernameExist($email, 'email')){
 			$errors['email'] = 'Email is taken';
 		}
 		// if($gender == ''){
 		// 	$errors['gender'] = 'Gender is required';
 		// }
+		if ($profile['error'] != UPLOAD_ERR_OK) {
+			$errors['profile'] = 'There was a problem with the file.';
+		}
 
 		if(!empty($errors)){
 			$_SESSION['errors'] = $errors;
 			$_SESSION['values'] = $_POST;			
 		}else{
 			//ako e se vo red, treba da gi vneseme vo baza
-			$insertUser($_POST);
+			if (move_uploaded_file($profile['tmp_name'], 'uploads/' . $profile['name'])) {
+				$insertArray = array_merge($_POST, ['profile' => $profile['name']]);
+				// var_dump($insertArray);
+				insertUser($insertArray);
+			}
+
 		}
 	}
 

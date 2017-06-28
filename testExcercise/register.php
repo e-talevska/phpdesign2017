@@ -7,7 +7,7 @@
 	$values = (isset($_SESSION['values'])) ? $_SESSION['values'] : [];
 	//remove values, errors from session , we need this to be valid one request
 	unset($_SESSION['errors'], $_SESSION['values']);
-
+	// var_dump($errors);
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,7 +16,7 @@
 </head>
 <body>
 	<h1>Register</h1>
-	<form method="POST" action="process_register.php">
+	<form method="POST" action="process_register.php" enctype="multipart/form-data">
 		<div>
 			<input value="<?php isset($values['username']) ? $values['username'] : ''; ?>" type="text" name="username" placeholder="Username">
 			<p class="errors"><?php echo isset($errors['username']) ? $errors['username'] : ''; ?></p>
@@ -44,6 +44,10 @@
 		<div>
 			<input value="<?php isset($values['email']) ? $values['email'] : ''; ?>" type="email" name="email" placeholder="Email">
 			<p class="errors"><?php echo isset($errors['email']) ? $errors['email'] : ''; ?></p>
+		</div>
+		<div>
+			<input value="<?php isset($values['profile']) ? $values['profile'] : ''; ?>" type="file" name="profile" placeholder="Profile">
+			<p class="errors"><?php echo isset($errors['profile']) ? $errors['profile'] : ''; ?></p>
 		</div>
 		<div>
 			<?php $gender = isset($values['gender']) ? $values['gender'] : ''; ?>
