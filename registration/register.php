@@ -6,6 +6,7 @@ $values = (isset($_SESSION['values'])) ? $_SESSION['values'] : [];
 //remove the values from session
 //we need these to be valid only request
 unset($_SESSION['errors'], $_SESSION['values']);
+var_dump($errors);
 ?>
 <html>
     <head>
@@ -13,7 +14,7 @@ unset($_SESSION['errors'], $_SESSION['values']);
     </head>
     <body>
         <h1>Register</h1>
-        <form method="POST" action="process_register.php">
+        <form method="POST" action="process_register.php" enctype="multipart/form-data">
             <div>
                 <input value="<?php echo isset($errors['username']) ? $errors['username'] : ''; ?>" type="text" name="username" placeholder="Username">
                 <p class="error"><?php echo isset($errors['username']) ? $errors['username'] : ''; ?></p>             
@@ -51,6 +52,10 @@ unset($_SESSION['errors'], $_SESSION['values']);
                     <option <?php if($gender == 'other') { echo 'selected = ""'; } ?>value="other">Other</option>                
                 </select>   
                 <p class="error"></p> 
+            </div>
+            <div>
+                <input type="file" accept="image/*" name="profile">
+                <p class="error"></p>             
             </div>
             <div>
                 <button type="submit" name="register">Submit</button>
