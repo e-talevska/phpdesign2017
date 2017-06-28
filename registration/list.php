@@ -19,8 +19,15 @@ $users = fetchUsers();
                 echo "<tr>"
                 . "<td>{$user['username']}</td>"
                 . "<td>{$user['firstname']}</td>"
-                . "<td>{$user['lastname']}</td>"
-                . "</tr>";
+                . "<td>{$user['lastname']}</td>";
+                if($user['profile'] != '' && file_exists("uploads/{$user['profile']}")){
+//                    echo "<td><img src='uploads/{$user['profile']}' ></td>";
+                    echo "<td><a href='download.php?file={$user['profile']}'>Download</a></td>";
+                } else {
+                    echo "<td></td>";
+                }
+                
+                echo "</tr>";
             }
             ?>
         </table>

@@ -14,6 +14,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 //    $gender = isset($_POST['gender']) ? trim($_POST['gender']) : '';
     $dob = trim($_POST['dob']);
     
+    $profile = $_FILES['profile']; //array
     //validate the values
     $errors = [];
     
@@ -51,12 +52,21 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         $errors['dob'] = 'Date of birth is required';
     }
     
+    if($profile['error'] != UPLOAD_ERR_OK) {
+        $errors['profile'] = "Upload failed";
+    }
+    
     if(!empty($errors)) {
         $_SESSION['errors'] = $errors;
         $_SESSION['values'] = $_POST;
     } else {
         //all good
-        insertUser($_POST);
+        if(move_uploaded_file($profile['tmp_name'], 'uploads/'.$profile['name'])){
+//            $_POST['profile'] = $profile['name'];
+            $insertArray = array_merge($_POST, ['profile' => $profile['name']]);
+//            var_dump($insertArray);exit;
+            insertUser($insertArray);
+        }
         header("Location: list.php");exit;
     }
 }
