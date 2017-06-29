@@ -68,6 +68,12 @@
 		$(function(){
 
 			$("form").validate({
+				//ako ne go koristeme validate od plugin, submit eventot go fakame na ovoj nacin
+				//$('form').on('submit', function(e){
+						//e.preventDefault();
+						//FormData vraka javascript objekt ako so get 0 go zememem inaku bez nego so this imame jquery objekt, a ni treba js objektot i ponatamu e istiot kod
+						//var formData = new FormData($(this).get(0));
+					//});
 				submitHandler: function(form, event) {
 					event.preventDefault();
 					var formData = new FormData(form);
