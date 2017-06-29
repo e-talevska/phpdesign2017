@@ -77,6 +77,12 @@ unset($_SESSION['errors'], $_SESSION['values']);
 	
 	<script>
 		$(function(){
+		//ako ne koristime jquery validate
+			// $('form').on('submit',function(e){
+			// 	e.preventDefault();
+			// 	var formData = new FormData($(this).get(0));
+			// 	//se ostanato e isto
+			// });
 
 			$('form').validate({
  				submitHandler: function(form, event) {
