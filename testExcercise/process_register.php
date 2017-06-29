@@ -5,8 +5,7 @@
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 		require 'db.php';
-
-
+		//get values from inputs
 		$username = trim($_POST['username']);
 		$password = trim($_POST['password']);
 		$firstname = trim($_POST['firstname']);
@@ -57,8 +56,22 @@
 		}
 
 		if(!empty($errors)){
-			$_SESSION['errors'] = $errors;
-			$_SESSION['values'] = $_POST;			
+			if(isset($_POST['ajax'])){
+				//json_encode ja pretvora nizata vo json objekt
+				$jsonResponse = [
+
+					'success' => false,
+					'errors' => $errors
+
+				];
+				//json_encode od dadena niza pravi json struktura
+				echo json_encode($jsonResponse);
+				exit;
+				//ako e ajax i ima greski kodot zvarsuva tuka
+			}else{
+				$_SESSION['errors'] = $errors;
+				$_SESSION['values'] = $_POST;
+			}						
 		}else{
 			//ako e se vo red, treba da gi vneseme vo baza
 			if (move_uploaded_file($profile['tmp_name'], 'uploads/' . $profile['name'])) {
@@ -70,6 +83,24 @@
 		}
 	}
 
-	header('Location: register.php');exit;
+	//bidejki koristeme ajax mora pak proverka oti na browserot header samo niso ne mu znachi
+	if(isset($_POST['ajax'])){
+		$jsonResponse = [
+
+			'success' => true,
+			'location' => 'list.php'
+
+		];
+
+		echo json_encode($jsonResponse);
+		exit;
+
+	}else{
+		header('Location: list.php');
+		exit;
+	}
+
+header('Location: register.php');
+	
 
 ?>
