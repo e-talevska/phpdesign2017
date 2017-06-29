@@ -44,9 +44,9 @@
 				
 				$distance += 50;
 			}
-		while ($distance <= 1250) {
+		//while($distance <= 1250){
 			
-		}
+		//}
 	?>
 	</table>
 

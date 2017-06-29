@@ -22,7 +22,7 @@
 			echo "<h3>Good Afternoon</h3>";
 		}
 
-		if()
+		
 
 	?>
 

@@ -1,6 +1,6 @@
 <?php 
 //aritmeticki operatori
-	$feet = 3400;
+	$feet = 346570;
 	$meters = $feet * 0.3048; 
 
 

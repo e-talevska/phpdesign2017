@@ -28,7 +28,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			if (password_verify($password, $user->password)) {
 				//ok
 				$_SESSION['logged_in'] = $email;
-				$_SESSION['fullName'] = $user->fullName;
+				$_SESSION['fullName'] = $user->fullName; //dodavame full name 
 				// $realPath = realpath('../offices/list.php');
 				header("Location: ../offices/list.php");exit;
 			}else{
