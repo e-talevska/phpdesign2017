@@ -1,7 +1,7 @@
 <?php
 
 function connect() {
-    $pdo = new PDO('mysql:host=localhost;dbname=exercise', 'root', '');
+    $pdo = new PDO('mysql:host=localhost;dbname=excercise', 'root', '');
     return $pdo;
 }
 
