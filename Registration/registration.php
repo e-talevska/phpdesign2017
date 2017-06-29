@@ -3,6 +3,7 @@ session_start();
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
 	require 'db.php';
+	// var_dump($_POST);exit;
 	$username = trim($_POST['username']);
 	$password = trim($_POST['password']);
 	$firstName = trim($_POST['firstName']);
@@ -55,14 +56,33 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 	}
 
 	if(!empty($errors)){
-		$_SESSION['errors'] = $errors;
-		$_SESSION['values'] = $_POST;
+		if(isset($_POST['ajax'])){
+			$jsonResponse = [
+				'success' => false,
+				'errors' => $errors
+			];
+			echo json_encode($jsonResponse);
+			exit;
+		} else{
+			$_SESSION['errors'] = $errors;
+			$_SESSION['values'] = $_POST;
+		}
 	} else{
 		if(move_uploaded_file($profile['tmp_name'], 'uploads/'.$profile['name'])){
 			$insertArray = array_merge($_POST, ['profile' => $profile['name']]);
 			insertUser($insertArray);
 		}
-		header('Location: list.php');exit;
+		if(isset($_POST['ajax'])){
+			$jsonResponse = [
+				'success' => true,
+				'location' => 'list.php'
+			];
+
+			echo json_encode($jsonResponse);
+			exit;
+		} else {
+			header('Location: list.php');exit;
+		}
 	}
 }
 header('Location: form.php');exit;
