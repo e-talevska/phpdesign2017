@@ -57,8 +57,18 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     }
     
     if(!empty($errors)) {
-        $_SESSION['errors'] = $errors;
-        $_SESSION['values'] = $_POST;
+        if(isset($_POST['ajax'])) {
+            $jsonResponse = [
+                'success' => false,
+                'errors' => $errors
+            ];
+            
+            echo json_encode($jsonResponse);
+            exit;
+        } else {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['values'] = $_POST;
+        }
     } else {
         //all good
         if(move_uploaded_file($profile['tmp_name'], 'uploads/'.$profile['name'])){
@@ -67,7 +77,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 //            var_dump($insertArray);exit;
             insertUser($insertArray);
         }
-        header("Location: list.php");exit;
+        if(isset($_POST['ajax'])) {
+            $jsonResponse = [
+              'success' => true,
+              'location' => 'list.php'  
+            ];
+            
+            echo json_encode($jsonResponse);
+            exit;
+        } else {
+            header("Location: list.php");exit;
+        }
     }
 }
 header("Location: register.php");exit;
